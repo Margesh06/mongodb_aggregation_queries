@@ -1,7 +1,8 @@
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
-const uri = 'mongodb+srv://admin-Margesh:margesh@cluster0.dgnbguu.mongodb.net/sample_mflix';
+const uri = process.env.MONGO_URI;
 const dbName = 'sample_mflix';    
 
 async function testAggregation() {
@@ -9,7 +10,7 @@ async function testAggregation() {
   await client.connect();
   const db = client.db(dbName);
 
-  const pipeline = JSON.parse(fs.readFileSync('5.json', 'utf-8'));
+  const pipeline = JSON.parse(fs.readFileSync('2.json', 'utf-8'));
   const result = await db.collection('movies').aggregate(pipeline).toArray();
   // Converted the result to a more readable format by stringifying the _id and pretty-printing the result
   const resultWithStringId = result.map(item => ({
